@@ -1,2 +1,2 @@
 import streamlit as st
-st.title('레스기')
+st.title('레스끼끼')
