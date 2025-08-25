@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import matplotlib.pyplot as plt
 # -------------------------------
 # 샘플 음식 데이터
 # -------------------------------
