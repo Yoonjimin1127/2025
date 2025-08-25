@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+
 # -------------------------------
 # 샘플 음식 데이터
 # -------------------------------
@@ -12,7 +12,7 @@ food_data = {
     "떡볶이": {"탄수화물": 70, "단백질": 7, "지방": 10}
 }
 
-# 건강식 추천 데이터 (간단)
+# 건강식 추천 데이터
 healthy_foods = {
     "탄수화물": ["샐러드", "두부", "현미밥"],
     "단백질": ["닭가슴살", "달걀", "두부"],
@@ -32,7 +32,7 @@ if menu:
         st.subheader(f"'{menu}'의 영양 성분")
         st.write(nutrients)
 
-        # 차트
+        # ✅ Streamlit 내장 차트 사용
         chart_data = pd.DataFrame({
             "영양소": ["탄수화물", "단백질", "지방"],
             "값": [nutrients["탄수화물"], nutrients["단백질"], nutrients["지방"]]
