@@ -1,5 +1,5 @@
 import streamlit as st
-import matplotlib.pyplot as plt
+import pandas as pd
 
 # -------------------------------
 # 1. 식단 균형 분석기
@@ -23,18 +23,17 @@ def diet_balance():
         st.subheader(f"'{menu}'의 영양 성분")
         st.write(nutrients)
 
-        # 시각화
-        fig, ax = plt.subplots()
-        labels = ["탄수화물", "단백질", "지방"]
-        values = [nutrients["탄수화물"], nutrients["단백질"], nutrients["지방"]]
-        ax.pie(values, labels=labels, autopct="%.1f%%", startangle=90)
-        st.pyplot(fig)
+        # ✅ matplotlib 대신 Streamlit 내장 차트 사용
+        chart_data = pd.DataFrame({
+            "영양소": ["탄수화물", "단백질", "지방"],
+            "값": [nutrients["탄수화물"], nutrients["단백질"], nutrients["지방"]]
+        })
+        st.bar_chart(chart_data.set_index("영양소"))
 
         # 개선 제안
-        carb, protein, fat = values
+        carb, protein, fat = nutrients["탄수화물"], nutrients["단백질"], nutrients["지방"]
         suggestion = ""
 
-        # 간단 기준: 탄:단:지 = 50:30:20
         if carb > 60:
             suggestion += "- 탄수화물이 많아요. 채소나 단백질을 더 추가해보세요.\n"
         if protein < 15:
@@ -50,39 +49,3 @@ def diet_balance():
 
     elif menu != "":
         st.warning("데이터에 없는 음식이에요. (예: 김밥, 치킨, 샐러드, 라면, 떡볶이)")
-
-
-# -------------------------------
-# 4. 비타민/미네랄 추천기
-# -------------------------------
-nutrient_foods = {
-    "비타민 C": ["귤", "키위", "파프리카", "브로콜리"],
-    "철분": ["시금치", "소고기", "콩", "계란"],
-    "칼슘": ["우유", "치즈", "멸치", "두부"],
-    "비타민 D": ["연어", "버섯", "계란 노른자"],
-    "칼륨": ["바나나", "고구마", "아보카도"]
-}
-
-def vitamin_recommender():
-    st.header("🍊 비타민/미네랄 추천기")
-
-    selected = st.selectbox("부족할 수 있는 영양소를 선택하세요", list(nutrient_foods.keys()))
-
-    if selected:
-        st.subheader(f"✅ {selected} 보충에 좋은 음식")
-        foods = nutrient_foods[selected]
-        for f in foods:
-            st.write(f"- {f}")
-
-
-# -------------------------------
-# 메인 실행
-# -------------------------------
-st.title("🥗 식품 영양 분석 & 추천 웹")
-
-choice = st.sidebar.radio("메뉴 선택", ["식단 균형 분석기", "비타민/미네랄 추천기"])
-
-if choice == "식단 균형 분석기":
-    diet_balance()
-else:
-    vitamin_recommender()
