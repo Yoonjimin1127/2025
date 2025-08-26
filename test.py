@@ -1,7 +1,5 @@
-
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 # 예시 데이터
 food_data = pd.DataFrame({
@@ -21,8 +19,11 @@ nutrients = st.multiselect(
 
 if nutrients:
     # 선택한 영양소 기준으로 음식 추천
-    recommended = food_data.sort_values(by=nutrients, ascending=False)
-    st.write("추천 음식:")
-    st.dataframe(recommended[['음식'] + nutrients])
+    try:
+        recommended = food_data.sort_values(by=nutrients, ascending=False)
+        st.write("추천 음식:")
+        st.dataframe(recommended[['음식'] + nutrients])
+    except Exception as e:
+        st.error(f"추천 음식 불러오기 중 오류 발생: {e}")
 else:
     st.write("영양소를 선택하면 음식 추천이 나옵니다.")
