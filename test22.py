@@ -1,3 +1,8 @@
+# app.py 파일
+import streamlit as st
+import pandas as pd
+
+# 예시 데이터
 food_data = pd.DataFrame({
     '음식': ['계란', '시금치', '연어', '두부', '오렌지'],
     '단백질': [6, 2, 20, 8, 1],
