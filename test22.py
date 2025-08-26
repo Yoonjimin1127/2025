@@ -1,6 +1,7 @@
 # app.py 파일
 import streamlit as st
 import pandas as pd
+# matplotlib 사용하지 않도록 수정
 
 # 예시 데이터
 food_data = pd.DataFrame({
@@ -25,12 +26,12 @@ if nutrients:
         st.write("추천 음식:")
         st.dataframe(recommended[['음식'] + nutrients])
         
-        # streamlit 내장 차트 기능 사용
+        # 시각화는 streamlit 내장 기능 사용
         if st.button('차트로 보기'):
             for nutrient in nutrients:
                 st.subheader(f'{nutrient} 함량')
                 st.bar_chart(recommended.set_index('음식')[nutrient])
     except Exception as e:
-        st.error(f"오류 발생: {e}")
+        st.error(f"추천 음식 불러오기 중 오류 발생: {e}")
 else:
     st.write("영양소를 선택하면 음식 추천이 나옵니다.")
