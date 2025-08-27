@@ -74,3 +74,5 @@ if st.button("✨ 결과 보기 ✨"):
     </div>
     """, unsafe_allow_html=True)
 
+
+
